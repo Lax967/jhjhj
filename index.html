@@ -1,39 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 6-Month Monthsary! ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #1a0b2e 0%, #05010d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* --- CURSOR TRAIL STYLE --- */
+        .cursor-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 16px;
+            user-select: none;
+            animation: floatAndFade 1s ease-out forwards;
+        }
+        @keyframes floatAndFade {
+            0% {
+                transform: translate(-50%, -50%) scale(1) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.4) translate(var(--mx), var(--my));
+                opacity: 0;
+            }
+        }
+
+        /* --- FIREWORKS ANIMATION EFFECT --- */
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: explode 2s ease-out infinite;
+        }
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                box-shadow: 
+                    0 0 #ff477e, 0 0 #ff477e, 0 0 #ff477e, 0 0 #ff477e,
+                    0 0 #00f0ff, 0 0 #00f0ff, 0 0 #00f0ff, 0 0 #00f0ff,
+                    0 0 #ffb3c1, 0 0 #ffb3c1, 0 0 #ffb3c1, 0 0 #ffb3c1;
+            }
+            100% {
+                opacity: 0;
+                box-shadow: 
+                    -80px -80px #ff477e, 80px -80px #ff477e, -80px 80px #ff477e, 80px 80px #ff477e,
+                    -120px 0px #00f0ff, 120px 0px #00f0ff, 0px -120px #00f0ff, 0px 120px #00f0ff,
+                    -60px -100px #ffb3c1, 60px -100px #ffb3c1, -60px 100px #ffb3c1, 60px 100px #ffb3c1;
+                transform: translate(var(--x), var(--y)) scale(0.5);
+            }
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 34px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            text-align: center;
+            z-index: 10;
+            text-shadow: 0 0 15px rgba(255, 71, 126, 0.6);
+        }
+        .subtitle {
+            color: #b3b3b3;
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* --- DASHBOARD CONTAINER --- */
+        .dashboard-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+            z-index: 10;
+            position: relative;
+            min-height: 550px;
+            perspective: 1200px;
+        }
+
+        .side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            flex: 1;
+            max-width: 280px;
+            transform-style: preserve-3d;
+        }
+
+        /* --- CENTRAL FLOWER BOUQUET --- */
+        .center-flower-zone {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 15;
+        }
+        .bouquet {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #ff758f 0%, #ff85a1 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255, 71, 126, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+        .bouquet-flowers {
+            font-size: 45px;
+            text-align: center;
+            line-height: 1.2;
+            cursor: default;
+            user-select: none;
+        }
+        .flower-tag {
+            position: absolute;
+            bottom: -25px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 16px;
+            border-radius: 20px;
+            color: #ff477e;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(255,71,126,0.3);
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        /* --- 3D ENVELOPE DESIGN --- */
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 130px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 3D Faces towards the middle flower */
+        .left-side .envelope-wrapper {
+            transform: rotateY(25deg);
+            transform-origin: right center;
+        }
+        .right-side .envelope-wrapper {
+            transform: rotateY(-25deg);
+            transform-origin: left center;
+        }
+
+        /* Envelope Base Pocket */
+        .envelope-pocket {
+            width: 100%;
+            height: 100%;
+            background: #fceade;
+            border: 2px solid #e3beaa;
+            border-radius: 4px 4px 8px 8px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Triangle Top Flap */
+        .envelope-pocket::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: 0;
+            border-left: 135px solid transparent;
+            border-right: 135px solid transparent;
+            border-top: 65px solid #ebd0be;
+            transform-origin: top center;
+            transition: transform 0.4s ease 0.2s, border-top-color 0.4s;
+            z-index: 4;
+        }
+
+        .envelope-pocket h3 {
+            color: #a65b46;
+            font-size: 18px;
+            margin-bottom: 2px;
+            z-index: 5;
+        }
+        .wax-seal {
+            font-size: 26px;
+            z-index: 6;
+            margin-top: 5px;
+            transition: transform 0.3s ease;
+        }
+        .envelope-wrapper:hover .wax-seal {
+            transform: scale(1.15);
+        }
+
+        /* --- THE SLIDING PAPER LETTER --- */
+        .letter-paper {
+            position: absolute;
+            width: 90%;
+            height: 85%;
+            background: #fffdf2;
+            left: 5%;
+            bottom: 5%;
+            border-radius: 4px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+            padding: 15px;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s, width 0.5s, left 0.5s;
+            pointer-events: none;
+            border: 1px solid #ddd;
+        }
+        
+        .paper-content {
+            opacity: 0;
+            color: #333;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* --- ZOOMED & OPENED LIGHTBOX MODAL STATE --- */
+        .envelope-wrapper.zoomed {
+            z-index: 100;
+        }
+        
+        .envelope-wrapper.zoomed .envelope-pocket {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -30%) rotateY(0deg) scale(1.1) !important;
+            width: 340px;
+            height: 200px;
+            z-index: 100;
+        }
+
+        /* Open state: Flip flap up */
+        .envelope-wrapper.opened .envelope-pocket::after {
+            transform: rotateX(180deg);
+            border-top-color: #fceade;
+            z-index: 1;
+            transition: transform 0.4s ease 0s;
+        }
+
+        /* Open state: Slide paper completely clear out of the envelope */
+        .envelope-wrapper.opened .letter-paper {
+            transform: translateY(-230px);
+            height: 380px;
+            width: 320px;
+            left: 10px;
+            z-index: 105;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            pointer-events: auto;
+            background-image: linear-gradient(#eef, #fff 95%);
+            border: 2px solid #f2e2be;
+            padding: 25px 20px;
+        }
+
+        .envelope-wrapper.opened .paper-content {
+            opacity: 1;
+        }
+
+        .paper-content h4 {
+            color: #ff477e;
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 1px dashed #ffb3c1;
+            padding-bottom: 5px;
+        }
+        .paper-content p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            text-align: left;
+            flex-grow: 1;
+        }
+        .close-btn {
+            font-size: 11px;
+            color: #ff477e;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Dark Dimming Backdrop Layer */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 1, 13, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 90;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .overlay.active { 
+            display: block; 
+            opacity: 1; 
+        }
+
+        @media (max-width: 850px) {
+            .dashboard-container { flex-direction: column; gap: 30px; }
+            .side-column { max-width: 100%; width: 100%; }
+            .left-side .envelope-wrapper, .right-side .envelope-wrapper { transform: none; }
+            .center-flower-zone { order: -1; margin-bottom: 10px; }
+            .envelope-wrapper.zoomed .envelope-pocket { transform: translate(-50%, -45%) scale(1) !important; }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="intro-screen">
-        <button id="start-btn">Click to Open Our Memories</button>
+    <div class="firework" style="top: 20%; left: 15%; --x: -40px; --y: -60px; animation-delay: 0s; background: #ff477e;"></div>
+    <div class="firework" style="top: 15%; left: 80%; --x: 50px; --y: -40px; animation-delay: 0.5s; background: #00f0ff;"></div>
+    <div class="firework" style="top: 60%; left: 10%; --x: -30px; --y: 50px; animation-delay: 1s; background: #ffb3c1;"></div>
+    <div class="firework" style="top: 70%; left: 85%; --x: 60px; --y: 30px; animation-delay: 1.4s; background: #ffa3b1;"></div>
+
+    <h1>Happy 6-Month Monthsary! ❤️</h1>
+    <p class="subtitle">Tap an envelope to pick it up, then tap it again to slide out the letter...</p>
+
+    <div class="dashboard-container">
+        
+        <div class="side-column left-side">
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>My Happiness</h3>
+                    <div class="wax-seal">💝</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>You Make Me So Happy 💕</h4>
+                            <p>I just want to start by telling you how incredibly happy you make me. Before you came along, life was just normal, but now every day feels bright and meaningful. Your smile, your laugh, and just your presence can turn my whole day around. You are my true source of happiness.</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>Opening My World</h3>
+                    <div class="wax-seal">💖</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>An Exposed Life 🚀</h4>
+                            <p>Being with you has completely exposed me to a better version of life. You've opened my eyes to so many new ideas, perspectives, and beautiful ways of seeing the world. I feel like my world has grown so much bigger and more exciting because you are in it.</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>Growing Up</h3>
+                    <div class="wax-seal">❤️</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>Maturing with You 🤝</h4>
+                            <p>These past 6 months have taught me so much about love and life. Loving you has genuinely made me a more mature person. I find myself thinking ahead, taking things more seriously, and wanting to build a real, stable future because you deserve the absolute best version of me.</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-flower-zone">
+            <div class="bouquet">
+                <div class="bouquet-flowers">🌸🌹🌷<br>🌻🌺💐</div>
+            </div>
+            <div class="flower-tag">For My Favorite Person 🌸</div>
+        </div>
+
+        <div class="side-column right-side">
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>Our Laughs</h3>
+                    <div class="wax-seal">💕</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>So Much Funnier 🃏</h4>
+                            <p>You make my life so much funnier! We have our own inside jokes, silly moments, and uncontainable laughter that I wouldn't trade for anything. You bring out my lighthearted side, and I love how we can just be completely goofy together without a care in the world.</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>Transformation</h3>
+                    <div class="wax-seal">✨</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>How I've Changed 💎</h4>
+                            <p>When I look back at who I was 6 months ago versus who I am today, the change is undeniable. You didn't just step into my life; you upgraded it. You've brought out a depth, a joy, and a positive energy in me that I never knew I had inside.</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper" onclick="handleEnvelopeClick(event, this)">
+                <div class="envelope-pocket">
+                    <h3>6 Months Together</h3>
+                    <div class="wax-seal">💌</div>
+                    <div class="letter-paper">
+                        <div class="paper-content">
+                            <h4>Happy 6-Month Monthsary! 🎉</h4>
+                            <p>Happy 6-Month Monthsary, my love! Thank you for the happiness, the growth, the mind-opening experiences, and the endless laughs. Half a year down, and I am completely ready for all the maturity, fun, and new milestones we'll cross next. I love you so much!</p>
+                            <div class="close-btn">(Tap anywhere to close)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="container">
-        <div class="left-side">
-            <div class="envelope" data-month="1">Month 1</div>
-            <div class="envelope" data-month="2">Month 2</div>
-            <div class="envelope" data-month="3">Month 3</div>
-        </div>
+    <div class="overlay" id="overlay" onclick="closeActiveEnvelope()"></div>
 
-        <div class="center-bouquet">
-            <img src="bouquet.png" alt="Bouquet" class="bouquet-img">
-        </div>
+    <script>
+        let activeWrapper = null;
 
-        <div class="right-side">
-            <div class="envelope" data-month="4">Month 4</div>
-            <div class="envelope" data-month="5">Month 5</div>
-            <div class="envelope" data-month="6">Month 6</div>
-        </div>
-    </div>
+        // --- CURSOR TRAIL LOGIC ---
+        const heartEmojis = ['❤️', '💖', '💕', '💝', '🌸', '✨'];
+        
+        document.addEventListener('mousemove', function(e) {
+            // Drop hearts at a subtle interval rate to avoid clutter
+            if (Math.random() > 0.15) return; 
+            createHeartTrail(e.clientX, e.clientY);
+        });
 
-    <div id="modal" class="hidden">
-        <div class="modal-content">
-            <p id="letter-text">This is our memory!</p>
-            <button onclick="closeModal()">Close</button>
-        </div>
-    </div>
+        document.addEventListener('touchmove', function(e) {
+            if (Math.random() > 0.15) return;
+            const touch = e.touches[0];
+            createHeartTrail(touch.clientX, touch.clientY);
+        });
 
-    <script src="script.js"></script>
+        function createHeartTrail(x, y) {
+            const heart = document.createElement('div');
+            heart.classList.add('cursor-heart');
+            
+            // Randomly select romantic symbols and sizes
+            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = Math.floor(Math.random() * 12 + 12) + 'px';
+
+            // Random flight direction offsets for variables in keyframe animations
+            const moveX = (Math.random() - 0.5) * 80;
+            const moveY = (Math.random() - 0.5) * 80 - 40; // Slight tendency to drift upwards
+            heart.style.setProperty('--mx', `${moveX}px`);
+            heart.style.setProperty('--my', `${moveY}px`);
+
+            document.body.appendChild(heart);
+
+            // Clean element out of DOM completely when animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        }
+
+        // --- ENVELOPE CONTROLLER ---
+        function handleEnvelopeClick(event, wrapper) {
+            event.stopPropagation();
+            const overlay = document.getElementById('overlay');
+
+            if (wrapper.classList.contains('opened')) {
+                closeActiveEnvelope();
+                return;
+            }
+
+            if (activeWrapper && activeWrapper !== wrapper) {
+                closeActiveEnvelope();
+                setTimeout(() => { handleEnvelopeClick(event, wrapper); }, 350);
+                return;
+            }
+
+            if (!wrapper.classList.contains('zoomed')) {
+                wrapper.classList.add('zoomed');
+                overlay.classList.add('active');
+                activeWrapper = wrapper;
+            } else {
+                wrapper.classList.add('opened');
+            }
+        }
+
+        function closeActiveEnvelope() {
+            const overlay = document.getElementById('overlay');
+            if (activeWrapper) {
+                activeWrapper.classList.remove('opened');
+                
+                const closingWrapper = activeWrapper;
+                activeWrapper = null;
+                overlay.classList.remove('active');
+
+                setTimeout(() => {
+                    if (closingWrapper) {
+                        closingWrapper.classList.remove('zoomed');
+                    }
+                }, 400);
+            }
+        }
+    </script>
 </body>
 </html>
